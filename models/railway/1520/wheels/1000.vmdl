@@ -1,0 +1,104 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = [  ]
+						use_global_default = false
+						global_default_material = ""
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsShapeCylinder"
+						name = "lwheel"
+						parent_bone = ""
+						surface_prop = "metal"
+						collision_prop = "default"
+						radius = 19.684999
+						point0 = [ 0.0, 29.5275, 0.0 ]
+						point1 = [ 0.0, 35.432999, 0.0 ]
+					},
+					{
+						_class = "PhysicsShapeCylinder"
+						name = "lborder"
+						parent_bone = ""
+						surface_prop = "metal"
+						collision_prop = "default"
+						radius = 23.622
+						point0 = [ 0.0, 27.559, 0.0 ]
+						point1 = [ 0.0, 29.5275, 0.0 ]
+					},
+					{
+						_class = "PhysicsShapeCylinder"
+						name = "middle"
+						parent_bone = ""
+						surface_prop = "metal"
+						collision_prop = "default"
+						radius = 4.7244
+						point0 = [ 0.0, -27.559, 0.0 ]
+						point1 = [ 0.0, 27.559, 0.0 ]
+					},
+					{
+						_class = "PhysicsShapeCylinder"
+						name = "rwheel"
+						parent_bone = ""
+						surface_prop = "metal"
+						collision_prop = "default"
+						radius = 19.684999
+						point0 = [ 0.0, -29.5275, 0.0 ]
+						point1 = [ 0.0, -35.432999, 0.0 ]
+					},
+					{
+						_class = "PhysicsShapeCylinder"
+						name = "rborder"
+						parent_bone = ""
+						surface_prop = "metal"
+						collision_prop = "default"
+						radius = 23.622
+						point0 = [ 0.0, -27.559, 0.0 ]
+						point1 = [ 0.0, -29.5275, 0.0 ]
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "1000"
+						filename = "models/railway/1520/wheels/1000/1000.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 0.3937
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+	}
+}
