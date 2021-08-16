@@ -23,26 +23,6 @@
 				[
 					{
 						_class = "PhysicsShapeCylinder"
-						name = "lwheel"
-						parent_bone = ""
-						surface_prop = "metal"
-						collision_prop = "default"
-						radius = 19.684999
-						point0 = [ 0.0, 29.5275, 0.0 ]
-						point1 = [ 0.0, 35.432999, 0.0 ]
-					},
-					{
-						_class = "PhysicsShapeCylinder"
-						name = "lborder"
-						parent_bone = ""
-						surface_prop = "metal"
-						collision_prop = "default"
-						radius = 23.622
-						point0 = [ 0.0, 27.559, 0.0 ]
-						point1 = [ 0.0, 29.5275, 0.0 ]
-					},
-					{
-						_class = "PhysicsShapeCylinder"
 						name = "middle"
 						parent_bone = ""
 						surface_prop = "metal"
@@ -52,24 +32,46 @@
 						point1 = [ 0.0, 27.559, 0.0 ]
 					},
 					{
-						_class = "PhysicsShapeCylinder"
-						name = "rwheel"
+						_class = "PhysicsHullFile"
+						name = "1000_phy_border"
 						parent_bone = ""
-						surface_prop = "metal"
+						surface_prop = "default"
 						collision_prop = "default"
-						radius = 19.684999
-						point0 = [ 0.0, -29.5275, 0.0 ]
-						point1 = [ 0.0, -35.432999, 0.0 ]
+						recenter_on_parent_bone = false
+						offset_origin = [ 0.0, 0.0, 0.0 ]
+						offset_angles = [ 0.0, 0.0, 0.0 ]
+						filename = "models/railway/1520/wheels/1000/1000_phy_border.fbx"
+						import_scale = 0.3937
+						faceMergeAngle = 5.0
+						maxHullVertices = 0
+						import_mode = "HullPerElement"
+						optimization_algorithm = "Exact"
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
 					},
 					{
-						_class = "PhysicsShapeCylinder"
-						name = "rborder"
+						_class = "PhysicsHullFile"
+						name = "1000_phy_wheel"
 						parent_bone = ""
-						surface_prop = "metal"
+						surface_prop = "default"
 						collision_prop = "default"
-						radius = 23.622
-						point0 = [ 0.0, -27.559, 0.0 ]
-						point1 = [ 0.0, -29.5275, 0.0 ]
+						recenter_on_parent_bone = false
+						offset_origin = [ 0.0, 0.0, 0.0 ]
+						offset_angles = [ 0.0, 0.0, 0.0 ]
+						filename = "models/railway/1520/wheels/1000/1000_phy_wheel.fbx"
+						import_scale = 0.3937
+						faceMergeAngle = 10.0
+						maxHullVertices = 0
+						import_mode = "HullPerElement"
+						optimization_algorithm = "Exact"
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
 					},
 				]
 			},
