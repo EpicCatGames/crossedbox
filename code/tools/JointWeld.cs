@@ -36,6 +36,13 @@
 				}
 				else
 				{
+					// do not weld to itself (crash)
+					if(physicsBody == tr.Body )
+					{
+						physicsBody = null;
+						return;
+					}
+
 					PhysicsJoint.Weld
 						.From( physicsBody )
 						.To( tr.Body )
