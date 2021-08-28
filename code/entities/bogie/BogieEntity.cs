@@ -3,8 +3,8 @@
 [Library( "ent_bogie", Title = "Bogie", Spawnable = true )]
 public partial class BogieEntity : Prop
 {
-	private Prop frontWheel;
-	private Prop rearWheel;
+	private PhysicsBody wheel_f_PhysicsBody;
+	private PhysicsBody wheel_r_PhysicsBody;
 
 	public BogieEntity()
 	{
@@ -15,7 +15,21 @@ public partial class BogieEntity : Prop
 	{
 		base.Spawn();
 
-		SetModel( "models/train/1520/bogies/simple.vmdl" );
+		SetModel( "models/railway/1520/bogies/1000.vmdl" );
+		SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
+
+		
+
+		wheel_f_PhysicsBody = GetBonePhysicsBody( GetBoneIndex( "wheel_f" ) );
+		wheel_r_PhysicsBody = GetBonePhysicsBody( GetBoneIndex( "wheel_r" ) );
 	}
 
+	
+
+	[Event.Tick.Server]
+	protected void Tick()
+	{
+		wheel_f_PhysicsBody.AngularVelocity += wheel_f_PhysicsBody.Transform.NormalToWorld(Vector3.Left);
+		wheel_r_PhysicsBody.AngularVelocity += wheel_r_PhysicsBody.Transform.NormalToWorld(Vector3.Left);
+	}
 }
