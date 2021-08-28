@@ -60,7 +60,7 @@
 						child_body = "wheel_f"
 						anchor_origin = [ 39.369999, 0.0, 0.0 ]
 						anchor_angles = [ 0.0, 0.0, 90.0 ]
-						collision_enabled = true
+						collision_enabled = false
 						friction = 0.0
 						enable_limit = true
 						min_angle = 0.0
@@ -72,7 +72,7 @@
 						child_body = "wheel_r"
 						anchor_origin = [ -39.369999, 0.0, 0.0 ]
 						anchor_angles = [ 0.0, 0.0, 90.0 ]
-						collision_enabled = true
+						collision_enabled = false
 						friction = 0.0
 						enable_limit = true
 						min_angle = 0.0
@@ -265,6 +265,42 @@
 							exclude_by_default = false
 							exception_list = [  ]
 						}
+					},
+				]
+			},
+			{
+				_class = "PhysicsBodyMarkupList"
+				children = 
+				[
+					{
+						_class = "PhysicsBodyMarkup"
+						target_body = "root"
+						mass_override = 0.0
+						inertia_scale = 1.0
+						linear_damping = 0.0
+						angular_damping = 0.0
+						use_mass_center_override = false
+						mass_center_override = [ 0.0, 0.0, 0.0 ]
+					},
+					{
+						_class = "PhysicsBodyMarkup"
+						target_body = "wheel_f"
+						mass_override = 5000.0
+						inertia_scale = 1.0
+						linear_damping = 0.0
+						angular_damping = 0.0
+						use_mass_center_override = false
+						mass_center_override = [ 0.0, 0.0, 0.0 ]
+					},
+					{
+						_class = "PhysicsBodyMarkup"
+						target_body = "wheel_r"
+						mass_override = 1500.0
+						inertia_scale = 1.0
+						linear_damping = 0.0
+						angular_damping = 0.0
+						use_mass_center_override = false
+						mass_center_override = [ 0.0, 0.0, 0.0 ]
 					},
 				]
 			},
