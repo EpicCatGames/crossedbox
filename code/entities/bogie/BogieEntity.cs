@@ -31,5 +31,11 @@ public partial class BogieEntity : Prop
 	{
 		wheel_f_PhysicsBody.AngularVelocity += wheel_f_PhysicsBody.Transform.NormalToWorld(Vector3.Left);
 		wheel_r_PhysicsBody.AngularVelocity += wheel_r_PhysicsBody.Transform.NormalToWorld(Vector3.Left);
+
+		wheel_f_PhysicsBody.Wake();
+		wheel_r_PhysicsBody.Wake();
+
+		wheel_f_PhysicsBody.PhysicsGroup.Wake();
+		wheel_r_PhysicsBody.PhysicsGroup.Wake();
 	}
 }

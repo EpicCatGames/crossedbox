@@ -56,7 +56,23 @@
 						surface_prop = "default"
 						collision_prop = "default"
 						faceMergeAngle = 20.0
-						maxHullVertices = 12
+						maxHullVertices = 10
+					},
+				]
+			},
+			{
+				_class = "PhysicsBodyMarkupList"
+				children = 
+				[
+					{
+						_class = "PhysicsBodyMarkup"
+						target_body = ""
+						mass_override = 2.0
+						inertia_scale = 1.0
+						linear_damping = 0.0
+						angular_damping = 0.0
+						use_mass_center_override = false
+						mass_center_override = [ 0.0, 0.0, 0.0 ]
 					},
 				]
 			},
