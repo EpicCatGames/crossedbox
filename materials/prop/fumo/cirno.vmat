@@ -2,12 +2,11 @@
 
 Layer0
 {
-	shader "vr_simple.vfx"
-
-	//---- PBR ----
-	F_AMBIENT_OCCLUSION_TEXTURE 1
+	shader "complex.vfx"
 
 	//---- Ambient Occlusion ----
+	g_flAmbientOcclusionDirectDiffuse "0.000"
+	g_flAmbientOcclusionDirectSpecular "0.000"
 	TextureAmbientOcclusion "materials/prop/fumo/cirno/cirno_low_Material_u1_v1_ambient_occlusion.png"
 
 	//---- Color ----
