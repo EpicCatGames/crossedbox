@@ -35,22 +35,17 @@ partial class SandboxPlayer
 
 		foreach ( var child in Children )
 		{
-			if ( child is ModelEntity e )
-			{
-				var model = e.GetModelName();
-				if ( model != null && !model.Contains( "clothes" ) )
-					continue;
+			if ( !child.Tags.Has( "clothes" ) ) continue;
+			if ( child is not ModelEntity e ) continue;
 
-				var clothing = new ModelEntity();
-				clothing.SetModel( model );
-				clothing.SetParent( ent, true );
-				clothing.RenderColorAndAlpha = e.RenderColorAndAlpha;
+			var model = e.GetModelName();
 
-				if ( Local.Pawn == this )
-				{
-					//	clothing.EnableDrawing = false; wtf
-				}
-			}
+			var clothing = new ModelEntity();
+			clothing.SetModel( model );
+			clothing.SetParent( ent, true );
+			clothing.RenderColorAndAlpha = e.RenderColorAndAlpha;
+			clothing.CopyBodyGroups( e );
+			clothing.CopyMaterialGroup( e );
 		}
 
 		if ( damageFlags.HasFlag( DamageFlags.Bullet ) ||

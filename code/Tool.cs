@@ -28,7 +28,7 @@ partial class Tool : Carriable
 
 	private void UpdateCurrentTool( Client owner )
 	{
-		var toolName = owner.GetUserString( "tool_current", "tool_boxgun" );
+		var toolName = owner.GetClientData<string>( "tool_current", "tool_boxgun" );
 		if ( toolName == null )
 			return;
 
@@ -84,6 +84,13 @@ partial class Tool : Carriable
 		if ( !IsActiveChild() ) return;
 
 		CurrentTool?.OnFrame();
+	}
+
+	public override void SimulateAnimator( PawnAnimator anim )
+	{
+		anim.SetParam( "holdtype", 1 );
+		anim.SetParam( "aimat_weight", 1.0f );
+		anim.SetParam( "holdtype_handedness", 1 );
 	}
 }
 
