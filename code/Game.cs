@@ -94,4 +94,10 @@ partial class SandboxGame : Game
 			}
 		}
 	}
+
+	[ClientCmd( "debug_write" )]
+	public static void Write()
+	{
+		ConsoleSystem.Run( "quit" );
+	}
 }
