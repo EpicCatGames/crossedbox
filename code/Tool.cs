@@ -96,7 +96,7 @@ partial class Tool : Carriable
 
 namespace Sandbox.Tools
 {
-	public partial class BaseTool : NetworkComponent
+	public partial class BaseTool : BaseNetworkable
 	{
 		public Tool Parent { get; set; }
 		public Player Owner { get; set; }

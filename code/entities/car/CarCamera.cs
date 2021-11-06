@@ -131,19 +131,19 @@ public class CarCamera : Camera
 		var pawn = Local.Pawn;
 		if ( pawn == null ) return;
 
-		Pos = pawn.EyePos;
-		Rot = pawn.Rotation * (orbitYawRot * orbitPitchRot);
+		Position = pawn.EyePos;
+		Rotation = pawn.Rotation * (orbitYawRot * orbitPitchRot);
 
 		Viewer = pawn;
 	}
 
 	private void DoThirdPerson( CarEntity car, PhysicsBody body )
 	{
-		Rot = orbitYawRot * orbitPitchRot;
+		Rotation = orbitYawRot * orbitPitchRot;
 
 		var carPos = car.Position + car.Rotation * (body.LocalMassCenter * car.Scale);
 		var startPos = carPos;
-		var targetPos = startPos + Rot.Backward * (OrbitDistance * car.Scale) + (Vector3.Up * (OrbitHeight * car.Scale));
+		var targetPos = startPos + Rotation.Backward * (OrbitDistance * car.Scale) + (Vector3.Up * (OrbitHeight * car.Scale));
 
 		var tr = Trace.Ray( startPos, targetPos )
 			.Ignore( car )
@@ -151,7 +151,7 @@ public class CarCamera : Camera
 			.WorldOnly()
 			.Run();
 
-		Pos = tr.EndPos;
+		Position = tr.EndPos;
 
 		Viewer = null;
 	}
@@ -220,9 +220,9 @@ public class CarCamera : Camera
 		float x = Noise.Perlin( pos, 0, 0 ) * length;
 		float y = Noise.Perlin( pos, 5.0f, 0 ) * length;
 
-		Pos += Rot.Right * x + Rot.Up * y;
-		Rot *= Rotation.FromAxis( Vector3.Up, x );
-		Rot *= Rotation.FromAxis( Vector3.Right, y );
+		Position += Rotation.Right * x + Rotation.Up * y;
+		Rotation *= Rotation.FromAxis( Vector3.Up, x );
+		Rotation *= Rotation.FromAxis( Vector3.Right, y );
 	}
 }
 

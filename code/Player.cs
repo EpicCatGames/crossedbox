@@ -73,6 +73,7 @@ partial class SandboxPlayer : Player
 		Inventory.Add( new Tool() );
 		Inventory.Add( new Pistol() );
 		Inventory.Add( new Flashlight() );
+		Inventory.Add( new Fists() );
 
 		base.Respawn();
 	}

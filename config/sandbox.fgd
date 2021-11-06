@@ -1,37 +1,37 @@
-// 
-// SandboxGame
-// 
-@PointClass = sandbox : ""
+
+@BaseClass = BaseProperties_sandbox
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	parentAttachmentName(parentAttachment) [ group="Hierarchy" ] : "Parent Model Bone/Attachment Name" : : "The name of the bone or attachment to attach to on the entity's parent in the movement hierarchy. Use !bonemerge to use bone-merge style attachment."
+
+	useLocalOffset(boolean) [ group="Hierarchy" ] : "Use Model Attachment offsets" : 0 : "Whether to respect the specified local offset when doing the initial hierarchical attachment to its parent."
+	local.origin(vector) [ group="Hierarchy" ] : "Model Attachment position offset" : : "Offset in the local space of the parent model's attachment/bone to use in hierarchy. Not used if you are not using parent attachment."
+	local.angles(angle) [ group="Hierarchy" ] : "Model Attachment angular offset" : : "Angular offset in the local space of the parent model's attachment/bone to use in hierarchy. Not used if you are not using parent attachment."
+	local.scales(vector) [ group="Hierarchy" ] : "Model Attachment scale" : : "Scale in the local space of the parent model's attachment/bone to use in hierarchy. Not used if you are not using parent attachment."
+
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+	tags(tags) : "Tags" : "" : "A list of general purpose tags for this entity, for interactions with other entities such as triggers."
 ]
 
-// 
+//
 // Tool
-// 
-@PointClass = weapon_tool : ""
+//
+@PointClass base(BaseProperties_sandbox) = weapon_tool : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // BalloonEntity
-// 
-@PointClass model() = ent_balloon : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = ent_balloon : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -41,25 +41,24 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 
-// 
+//
 // BouncyBallEntity
-// 
-@PointClass model() = ent_bouncyball : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = ent_bouncyball : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -69,25 +68,24 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 
-// 
+//
 // DirectionalGravity
-// 
-@PointClass model() = directional_gravity : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = directional_gravity : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -97,25 +95,24 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 
-// 
+//
 // DroneEntity
-// 
-@PointClass model() = ent_drone : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = ent_drone : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -125,21 +122,21 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 
-// 
+//
 // LampEntity
-// 
-@PointClass = ent_lamp : ""
+//
+@PointClass base(BaseProperties_sandbox) = ent_lamp : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input TurnOn(void) : ""
 	input TurnOff(void) : ""
@@ -151,14 +148,12 @@
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // LightEntity
-// 
-@PointClass = ent_light : ""
+//
+@PointClass base(BaseProperties_sandbox) = ent_light : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input TurnOn(void) : ""
 	input TurnOff(void) : ""
@@ -170,18 +165,15 @@
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // NoiseTest
-// 
-@PointClass model() = noise_test : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = noise_test : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -191,25 +183,24 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 
-// 
+//
 // ThrusterEntity
-// 
-@PointClass model() = ent_thruster : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = ent_thruster : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -219,25 +210,24 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 
-// 
+//
 // WheelEntity
-// 
-@PointClass model() = ent_wheel : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = ent_wheel : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -247,97 +237,94 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 
-// 
+//
 // GravGun
-// 
-@PointClass = gravgun : ""
+//
+@PointClass base(BaseProperties_sandbox) = gravgun : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // PhysGun
-// 
-@PointClass = physgun : ""
+//
+@PointClass base(BaseProperties_sandbox) = physgun : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
+// Fists
+//
+@PointClass base(BaseProperties_sandbox) = weapon_fists : ""
+[
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+
+	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
+]
+
+//
 // Flashlight
-// 
-@PointClass = weapon_flashlight : ""
+//
+@PointClass base(BaseProperties_sandbox) = weapon_flashlight : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // Pistol
-// 
-@PointClass = weapon_pistol : ""
+//
+@PointClass base(BaseProperties_sandbox) = weapon_pistol : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // Shotgun
-// 
-@PointClass = weapon_shotgun : ""
+//
+@PointClass base(BaseProperties_sandbox) = weapon_shotgun : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // SMG
-// 
-@PointClass = weapon_smg : ""
+//
+@PointClass base(BaseProperties_sandbox) = weapon_smg : ""
 [
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 ]
 
-// 
+//
 // CarEntity
-// 
-@PointClass model() = ent_car : ""
+//
+@PointClass base(BaseProperties_sandbox) tags( Physics ) model() = ent_car : ""
 [
-	model(studio) [report]: "World Model" : "" : "The model this entity should use."
-	skin(materialgroup) [ group="Render Properties" ] : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
-	bodygroups(bodygroupchoices) [ group="Render Properties" ] : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
-	rendercolor(color255) : "FX Color (R G B)" : "255 255 255" : "The FX color is used by the selected Render Mode."
-	renderamt(integer) [ group="Render Properties" ] : "FX Amount (0 - 255)" : 255 : "The FX amount is used by the selected Render Mode."
-	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	parentname(target_destination) [ group="Hierarchy" ] : "Parent" : : "The name of this entity's parent in the movement hierarchy. Entities with parents move with their parent."
+	model(resource:vmdl) { report = true hide_when_solid = true }: "World Model" : "" : "The model this entity should use."
+	skin(materialgroup) { group = "Rendering" hide_when_solid = true } : "Skin" : "default" : "Some models have multiple versions of their textures, called skins." 
+	bodygroups(bodygroupchoices) { group = "Rendering" hide_when_solid = true } : "Body Groups" : "" : "Some models have multiple variations of certain items, such as characters having different hair styles, etc."
+	rendercolor(color255) { alpha = true } : "Color (R G B A)" : "255 255 255 255" : "The color tint of this entity."
 	collisiongroupoverride(choices) : "Collision Group Override" : -1 : "" =
 	[
 		-1 : "UNUSED"
@@ -347,10 +334,12 @@
 		5 : "COLLISION GROUP DEBRIS"
 		14 : "COLLISION GROUP WEAPON"
 	]
-	enable_shadows(boolean) [ group="Render Properties" ] : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
+	enable_shadows(boolean) { group = "Rendering" } : "Shadow Casting" : 1 : "Whether this entity should cast shadows or not"
 
+	input Break(void) : "Causes this prop to break, regardless if it is actually breakable or not. (i.e. ignores health and whether the model has gibs)"
 	input SetColor(string) : "Sets the color of this entity. Format is '255 255 255 255'."
 
-	output OnDamaged(void) : "Fired when the entity gets damaged"
+	output OnDamaged(void) : "Fired when the entity gets damaged."
+	output OnBreak(void) : "Fired when the entity gets destroyed."
 ]
 

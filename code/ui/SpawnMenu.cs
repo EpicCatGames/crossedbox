@@ -1,10 +1,8 @@
-﻿
-using Sandbox;
+﻿using Sandbox;
+using Sandbox.Tools;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using System;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
+
 
 [Library]
 public partial class SpawnMenu : Panel
@@ -57,7 +55,7 @@ public partial class SpawnMenu : Panel
 	{
 		toollist.DeleteChildren( true );
 
-		foreach ( var entry in Library.GetAllAttributes<Sandbox.Tools.BaseTool>() )
+		foreach ( var entry in Library.GetAllAttributes<BaseTool>() )
 		{
 			if ( entry.Title == "BaseTool" )
 				continue;
@@ -81,6 +79,22 @@ public partial class SpawnMenu : Panel
 		base.Tick();
 
 		Parent.SetClass( "spawnmenuopen", Input.Down( InputButton.Menu ) );
+
+		UpdateActiveTool();
+	}
+
+	void UpdateActiveTool()
+	{
+		var toolCurrent = ConsoleSystem.GetValue( "tool_current" );
+		var tool = string.IsNullOrWhiteSpace( toolCurrent ) ? null : Library.GetAttribute( toolCurrent );
+
+		foreach ( var child in toollist.Children )
+		{
+			if ( child is Button button )
+			{
+				child.SetClass( "active", tool != null && button.Text == tool.Title );
+			}
+		}
 	}
 
 	public override void OnHotloaded()
